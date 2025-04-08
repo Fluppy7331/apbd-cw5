@@ -128,8 +128,7 @@ public class AdvancedEmpDeptTests
         var grades = Database.GetSalgrades();
 
         var result = emps.Join(depts, e => e.DeptNo, d => d.DeptNo, (e, d) => new { e, d }) 
-            .SelectMany(ed => grades, (ed, s) => new { ed.e, ed.d, s })  // Join with Salgrade
-            .Where(joined => joined.e.Sal >= joined.s.Losal && joined.e.Sal <= joined.s.Hisal)  
+            .SelectMany(ed => grades, (ed, s) => new { ed.e, ed.d, s }).Where(joined => joined.e.Sal >= joined.s.Losal && joined.e.Sal <= joined.s.Hisal)
             .Select(final => new { final.e.EName, final.d.DName, final.s.Grade })  
             .ToList();
         
