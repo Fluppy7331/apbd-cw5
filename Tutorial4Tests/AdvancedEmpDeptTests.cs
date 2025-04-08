@@ -127,10 +127,10 @@ public class AdvancedEmpDeptTests
         var depts = Database.GetDepts();
         var grades = Database.GetSalgrades();
 
-        var result = emps.Join(depts, e => e.DeptNo, d => d.DeptNo, (e, d) => new { e, d })  // Join with Dept
+        var result = emps.Join(depts, e => e.DeptNo, d => d.DeptNo, (e, d) => new { e, d }) 
             .SelectMany(ed => grades, (ed, s) => new { ed.e, ed.d, s })  // Join with Salgrade
-            .Where(joined => joined.e.Sal >= joined.s.Losal && joined.e.Sal <= joined.s.Hisal)  // Filtering by salary range
-            .Select(final => new { final.e.EName, final.d.DName, final.s.Grade })  // Selecting desired columns
+            .Where(joined => joined.e.Sal >= joined.s.Losal && joined.e.Sal <= joined.s.Hisal)  
+            .Select(final => new { final.e.EName, final.d.DName, final.s.Grade })  
             .ToList();
         
         Assert.Contains(result, r => r.EName == "ALLEN" && r.DName == "SALES" && r.Grade == 3);
